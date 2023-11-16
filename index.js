@@ -3,6 +3,7 @@ const axios = require("axios");
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+const https = require('https');
 
 const app = express();
 
@@ -50,11 +51,17 @@ bot.onText(/\/serials/, (msg) => {
     axiosGet(serialTitle, "serial", msg.chat.id);
   });
 });
+
+const axiosReq = axios.create({
+  httpsAgent: new https.Agent({ rejectUnauthorized: false }),
+});
+
+
 const axiosGet = async (item, i, chatId) => {
   let cont;
   console.log(i, "function");
   try {
-    const response = await axios.get("https://api.alloha.tv", {
+    const response = await axiosReq.get("https://api.alloha.tv", {
       params: {
         token: "04941a9a3ca3ac16e2b4327347bbc1",
         order: "date",
@@ -91,7 +98,7 @@ const axiosGet = async (item, i, chatId) => {
                 [
                   {
                     text: "Смотреть",
-                    url: `https://ddd1m.online?id=${getframeId}&type=${type}`,
+                    url: `https://rmk99.online?id=${getframeId}&type=${type}`,
                   },
                 ],
               ],
